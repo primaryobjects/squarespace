@@ -55,13 +55,20 @@ const AuthorCollection = props => {
     return rows;
   };
 
+  const byTwo = data => {
+    return data.reduce(function (rows, key, index) { 
+      return (index % 2 == 0 ? rows.push([key]) 
+        : rows[rows.length-1].push(key)) && rows;
+      }, []);
+  };
+  
   return (
     <div id="author-collection">
       <div id="custom-list">
-        { data && data.length ? data.map((item, i) => {
+        { data && data.length ? byTwo(data).map(row => {
           return (
-            <div className={i % 2 === 0 ? 'row sqs-row' : 'pull-left'}>
-              <Inner data={item} />
+            <div className='row sqs-row'>
+              { row.map(item => (<Inner data={item} />)) }
             </div>
           );
         }) : <div>No authors found.</div> }
