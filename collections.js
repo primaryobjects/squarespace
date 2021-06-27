@@ -60,7 +60,7 @@ const AuthorCollection = props => {
       <div id="custom-list">
         { data && data.length ? data.map((item, i) => {
           return (
-            <div className={i % 2 === 0 ? 'row sqs-row' : ''}> }
+            <div className={i % 2 === 0 ? 'row sqs-row' : ''}>
               <Inner data={item} />
             </div>
           );
