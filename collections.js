@@ -86,9 +86,7 @@ const Author = props => {
                 </a>
               </p>
               <p className style={{ whiteSpace: "pre-wrap" }}>
-                <span>
-                  {author.twitter.startsWith('http') ? <a href={author.twitter} target='_blank'>{author.twitter}</a> : author.twitter}
-                </span>
+                <a href={author.twitter} target='_blank'>{author.twitter}</a>
               </p>
               <p className style={{ whiteSpace: "pre-wrap" }}>
                 <strong>Buy the Books:</strong>
