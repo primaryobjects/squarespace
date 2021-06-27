@@ -57,10 +57,12 @@ const AuthorCollection = props => {
 
   return (
     <div id="author-collection">
-      <div id="custom-list" className="user-items-list-item-container user-items-list-simple" style={{ gridGap: '100px 100px' }} data-controller="UserItemsListSimple" data-num-columns="3" data-content-order="media-first">
-        { data && data.length ? data.map(item => {
+      <div id="custom-list">
+        { data && data.length ? data.map((item, i) => {
           return (
-            <Inner data={item} />
+            <div className={i % 2 === 0 ? 'row sqs-row' : ''}> }
+              <Inner data={item} />
+            </div>
           );
         }) : <div>No authors found.</div> }
       </div>
