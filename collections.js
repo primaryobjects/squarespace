@@ -2,30 +2,37 @@
 const Author = props => {
   const author = props.data;
   return (
-    <li className="list-item" data-is-card-enabled="false">
-      <div className="list-item-media" style={{marginBottom: '6%', width: '100%'}}>
-        <div className="list-item-media-inner" data-aspect-ratio="4:3" data-animation-role="image">
-          <img data-image-focal-point="NaN,NaN" data-src={author.profileImage} data-image={author.profileImage} data-image-dimensions="5000x3333" className="list-image" data-load="false" data-mode="cover" data-use-advanced-positioning="true" data-parent-ratio="1.3" data-image-resolution="300w" src={author.profileImage} data-loaded="true" style={{width: '100%', height: '100%', objectFit: 'cover'}}></img>
-        </div>
-      </div>
-      <div className="list-item-media" style={{marginBottom: '6%', width: '100%'}}>
-        <div className="list-item-media-inner" data-aspect-ratio="4:3" data-animation-role="image">
-          <img data-image-focal-point="NaN,NaN" data-src={author.bookImage} data-image={author.bookImage} data-image-dimensions="5000x3333" className="list-image" data-load="false" data-mode="cover" data-use-advanced-positioning="true" data-parent-ratio="1.3" data-image-resolution="300w" src={author.bookImage} data-loaded="true" style={{width: '100%', height: '100%', objectFit: 'cover'}}></img>
-        </div>
-      </div>
-      <div className="list-item-content">
-        <div className="list-item-content__text-wrapper">
-          <h2 className="list-item-content__title" style={{maxWidth: '100%'}}>
-            {author.name}
-          </h2>
-          <div className="list-item-content__description" style={{marginTop: '6%', maxWidth: '100%'}}>
-            <p style={{whiteSpace: 'pre-wrap'}}>
-              {author.date}
-            </p>
+<div className="col sqs-col-6 span-6" id="yui_3_17_2_1_1624821117171_494">
+    <div className="row sqs-row" id="yui_3_17_2_1_1624821117171_493">
+      <div className="col sqs-col-5 span-5" id="yui_3_17_2_1_1624821117171_492">
+        <div className="sqs-block image-block sqs-block-image sqs-col-3 span-3 float float-right sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1601414526373_40613">
+          <div className="sqs-block-content" id="yui_3_17_2_1_1624821117171_491">
+            <div className="image-block-outer-wrapper layout-caption-below design-layout-inline combination-animation-site-default individual-animation-site-default individual-text-animation-site-default sqs-narrow-width animation-loaded" data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1624821117171_490">
+              <figure className="sqs-block-image-figure intrinsic" style={{maxWidth:'2500px'}} id="yui_3_17_2_1_1624821117171_489">
+                <div style={{paddingBottom: '85%', overflow: 'hidden'}} className="image-block-wrapper has-aspect-ratio" data-animation-role="image" id="yui_3_17_2_1_1624821117171_488">
+                  <noscript><img src={author.profileImage} /></noscript><img className="thumb-image loaded" data-src={author.profileImage} data-image={author.profileImage} data-image-dimensions="2500x2125" data-image-focal-point="0.5,0.5" data-load="false" data-image-id="5f73a61dbffe5632cc4fe3ad" data-type="image" style={{left: '-0.0625782%', top: '0%', width: '100.125%', height: '100%', position: 'absolute'}} data-image-resolution="300w" src={author.profileImage}></img>
+                </div>
+              </figure>
+            </div>
+          </div>
+          <div className="sqs-block html-block sqs-block-html" data-block-type="2" id="block-ddc2a533e837e937e983">
+            <div className="sqs-block-content">
+              <h4 style={{whiteSpace:'pre-wrap'}}>{author.name}</h4>
+              <p style={{whiteSpace:'pre-wrap'}}>{author.biography}</p>
+              <p style={{whiteSpace:'pre-wrap'}}>
+                <strong>Connect with {author.name}:</strong>
+              </p>
+              <p style={{whiteSpace:'pre-wrap'}}>
+                <a href="https://www.100thingstodoinphiladelphia.com/" target="_blank">https://www.100thingstodoinphiladelphia.com</a>
+              </p>
+              <p style={{whiteSpace:'pre-wrap'}}><strong>Buy the Book:</strong></p>
+              <p style={{whiteSpace:'pre-wrap'}}><a href="https://inkwoodnj.handseller.com/home/bookdetailsin/1681062720" target="_blank">100 Things to Do in Philadelphia Before You Die (2nd edition)</a></p>
+            </div>
           </div>
         </div>
       </div>
-    </li>
+    </div>
+</div>
   );
 }
 
@@ -65,15 +72,14 @@ const AuthorCollection = props => {
 
   return (
     <div id="author-collection">
-      <h3>Author List</h3>
-      <ul id="custom-list" className="user-items-list-item-container user-items-list-simple" style={{ gridGap: '100px 100px' }} data-controller="UserItemsListSimple" data-num-columns="3" data-content-order="media-first">
+      <div id="custom-list" className="user-items-list-item-container user-items-list-simple" style={{ gridGap: '100px 100px' }} data-controller="UserItemsListSimple" data-num-columns="3" data-content-order="media-first">
         { data && data.length ? data.map(item => {
           return (
             <Inner data={item} />
           );
         }) : <div>No authors found.</div> }
-      </ul>
       </div>
+    </div>
   );
 };
 
