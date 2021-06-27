@@ -8,3 +8,4 @@ A collection of render blocks for use on Squarespace.
 
 [Dynamic2](https://www.collingswoodbookfestival.com/dynamic2)
 
+[JSBin](https://jsbin.com/midunabaja/edit?js,output)
