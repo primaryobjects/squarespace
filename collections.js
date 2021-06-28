@@ -228,10 +228,3 @@ const adultAuthorManager = {
     };
   }
 };
-
-$(function() {
-  // Render a collection of authors using a specific spreadsheet parser and inner renderer.
-  ReactDOM.render(<AuthorCollection 
-                    manager={adultAuthorManager}
-                  />, document.getElementById('root'));
-});
