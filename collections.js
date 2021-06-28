@@ -51,6 +51,12 @@ const ProfileImage = props => {
 const Links = props => {
   const { website, facebook, instagram, twitter } = props.data;
   
+  const formatTwitter = url => {
+    // Extract Twitter username
+    return url.startsWith('http') ? `@${url.substring(url.lastIndexOf('/') + 1)}` : 
+      (url.startsWith('@') ? url : `@${url}`);
+  };
+  
   return (
     <div className="links">
       <p className style={{ whiteSpace: "pre-wrap" }}>
@@ -77,12 +83,8 @@ const Links = props => {
       <p className style={{ whiteSpace: "pre-wrap" }}>
         <i className="fab fa-twitter" style={{ marginRight: "5px" }}></i>
         <a
-          href={
-            twitter.startsWith("http") ? twitter : `http://twitter.com/${twitter}`
-          }
-          target="_blank"
-        >
-          {twitter}
+          href={ `http://twitter.com/${formatTwitter(twitter).substring(1)}` } target="_blank">
+          {formatTwitter(twitter)}
         </a>
       </p>
     </div>
