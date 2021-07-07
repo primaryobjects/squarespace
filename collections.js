@@ -228,3 +228,22 @@ const adultAuthorManager = {
     };
   }
 };
+
+
+const poetAuthorManager = {
+  url: 'https://spreadsheets.google.com/feeds/list/1xWo0lsrmHYf63RfYJPkDzML0BprTVvJLK6ifhp-mXaA/default/public/values?alt=json',
+  control: Author,
+  parse: row => {
+    return {
+      name: row['gsx$author']['$t'],
+      biography: row['gsx$biography']['$t'],
+      bookInformation: row['gsx$bookinformation']['$t'],
+      website: row['gsx$website']['$t'],
+      facebook: row['gsx$facebook']['$t'],
+      instagram: row['gsx$instagram']['$t'],
+      twitter: row['gsx$twitter']['$t'],
+      profileImage: row['gsx$profileimage']['$t'],
+      bookImage: row['gsx$bookimage']['$t'],
+    };
+  }
+};
