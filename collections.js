@@ -143,6 +143,40 @@ const Author = props => {
   );
 }
 
+const Poet = props => {
+  const author = props.data;
+  return (
+    <div className="col sqs-col-6 span-6" id="yui_3_17_2_1_1624821117171_521">
+      <div className="row sqs-row" id="yui_3_17_2_1_1624821117171_520">
+        <div className="col sqs-col-5 span-5" id="yui_3_17_2_1_1624821117171_519">
+          <div
+            className="sqs-block html-block sqs-block-html"
+            data-block-type={2}
+            id="block-1e88d17bec83c8e26856"
+          >
+            <div className="sqs-block-content">
+              <h4 style={{ whiteSpace: "pre-wrap" }}>{author.name}</h4>
+              <p className style={{ whiteSpace: "pre-wrap" }}>
+                {author.biography}
+              </p>
+              <Links data={author} />
+            </div>
+          </div>
+        </div>
+        <div className="col sqs-col-1 span-1">
+          <div
+            className="sqs-block spacer-block sqs-block-spacer sized vsize-1"
+            data-block-type={21}
+            id="block-f2bc30f609edf7e6a224"
+          >
+            <div className="sqs-block-content">&nbsp;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 const AuthorCollection = props => {
   const { useState, useEffect } = React;
   const [data, updateData] = useState();
@@ -232,18 +266,15 @@ const adultAuthorManager = {
 
 const poetAuthorManager = {
   url: 'https://spreadsheets.google.com/feeds/list/1xWo0lsrmHYf63RfYJPkDzML0BprTVvJLK6ifhp-mXaA/default/public/values?alt=json',
-  control: Author,
+  control: Poet,
   parse: row => {
     return {
-      name: row['gsx$author']['$t'],
+      name: row['gsx$poet']['$t'],
       biography: row['gsx$biography']['$t'],
-      bookInformation: row['gsx$bookinformation']['$t'],
       website: row['gsx$website']['$t'],
       facebook: row['gsx$facebook']['$t'],
       instagram: row['gsx$instagram']['$t'],
-      twitter: row['gsx$twitter']['$t'],
-      profileImage: row['gsx$profileimage']['$t'],
-      bookImage: row['gsx$bookimage']['$t'],
+      twitter: row['gsx$twitter']['$t']
     };
   }
 };
