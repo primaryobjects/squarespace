@@ -150,6 +150,15 @@ const Poet = props => {
       <div className="row sqs-row" id="yui_3_17_2_1_1624821117171_520">
         <div className="col sqs-col-5 span-5" id="yui_3_17_2_1_1624821117171_519">
           <div
+            className="sqs-block image-block sqs-block-image sqs-col-3 span-3 float float-right sqs-text-ready"
+            data-block-type={5}
+            id="block-yui_3_17_2_1_1601414526373_54455"
+          >
+            <div className="sqs-block-content" id="yui_3_17_2_1_1624821117171_518">
+              <ProfileImage url={author.profileImage}/>
+            </div>
+          </div>
+          <div
             className="sqs-block html-block sqs-block-html"
             data-block-type={2}
             id="block-1e88d17bec83c8e26856"
@@ -274,7 +283,8 @@ const poetAuthorManager = {
       website: row['gsx$website']['$t'],
       facebook: row['gsx$facebook']['$t'],
       instagram: row['gsx$instagram']['$t'],
-      twitter: row['gsx$twitter']['$t']
+      twitter: row['gsx$twitter']['$t'],
+      profileImage: row['gsx$profileimage']['$t'],
     };
   }
 };
