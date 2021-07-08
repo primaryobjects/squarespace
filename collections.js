@@ -91,6 +91,23 @@ const Links = props => {
   );
 };
 
+const Questions = props => {
+  return (
+    <div className="questions">
+      props.data.map(question => {
+          return (
+            <p className style={{ whiteSpace: "pre-wrap" }}>
+              <strong>{question.name}</strong>
+            </p>
+            <p> style={{ whiteSpace: "pre-wrap" }}
+              {question.value}
+            </p>
+          );
+      });
+    </div>
+  );
+};
+
 const Author = props => {
   const author = props.data;
   return (
@@ -169,6 +186,56 @@ const Poet = props => {
                 {author.biography}
               </p>
               <Links data={author} />
+            </div>
+          </div>
+        </div>
+        <div className="col sqs-col-1 span-1">
+          <div
+            className="sqs-block spacer-block sqs-block-spacer sized vsize-1"
+            data-block-type={21}
+            id="block-f2bc30f609edf7e6a224"
+          >
+            <div className="sqs-block-content">&nbsp;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const YoungAdult = props => {
+  const author = props.data;
+  return (
+    <div className="col sqs-col-6 span-6" id="yui_3_17_2_1_1624821117171_521">
+      <div className="row sqs-row" id="yui_3_17_2_1_1624821117171_520">
+        <div className="col sqs-col-5 span-5" id="yui_3_17_2_1_1624821117171_519">
+          <div
+            className="sqs-block image-block sqs-block-image sqs-col-3 span-3 float float-right sqs-text-ready"
+            data-block-type={5}
+            id="block-yui_3_17_2_1_1601414526373_54455"
+          >
+            <div className="sqs-block-content" id="yui_3_17_2_1_1624821117171_518">
+              <ProfileImage url={author.profileImage}/>
+            </div>
+          </div>
+          <div
+            className="sqs-block html-block sqs-block-html"
+            data-block-type={2}
+            id="block-1e88d17bec83c8e26856"
+          >
+            <div className="sqs-block-content">
+              <h4 style={{ whiteSpace: "pre-wrap" }}>{author.name}</h4>
+              <p className style={{ whiteSpace: "pre-wrap" }}>
+                {author.biography}
+              </p>
+              <Questions data={author.questions}/>
+              <Links data={author} />
+              <p className style={{ whiteSpace: "pre-wrap" }}>
+                <strong>Buy the Book:</strong>
+              </p>
+              <p className style={{ whiteSpace: "pre-wrap" }}>
+                {author.bookInformation}
+              </p>
             </div>
           </div>
         </div>
@@ -285,6 +352,28 @@ const poetAuthorManager = {
       instagram: row['gsx$instagram']['$t'],
       twitter: row['gsx$twitter']['$t'],
       profileImage: row['gsx$profileimage']['$t'],
+    };
+  }
+};
+
+const youngAdultAuthorManager = {
+  url: 'https://spreadsheets.google.com/feeds/list/1YRRQ4N5Eoplae7YpwNBJAIbMSzelIUURNRCjHu6pFl4/default/public/values?alt=json',
+  control: YoungAdult,
+  parse: row => {
+    return {
+      name: row['gsx$poet']['$t'],
+      biography: row['gsx$biography']['$t'],
+      bookInformation: row['gsx$bookinformation']['$t'],
+      website: row['gsx$website']['$t'],
+      facebook: row['gsx$facebook']['$t'],
+      instagram: row['gsx$instagram']['$t'],
+      twitter: row['gsx$twitter']['$t'],
+      profileImage: row['gsx$profileimage']['$t'],
+      questions: [
+        { name: "What's your favorite thing about meeting with readers?", value: row['gsx$whatsyourfavoritethingaboutmeetingwithreaders']['$t'] },
+        { name: "What is the weirdest question you've ever gotten from a reader?", value: row['gsx$whatistheweirdestquestionyouveevergottenfromareader']['$t'],
+        { name: "What are you most looking forward to about the Collingswood Book Festival?", value: row['gsx$whatareyoumostlookingforwardtoaboutthecollingswoodbookfestivalifyouvebeenherebefore']['$t'],
+      ],
     };
   }
 };
