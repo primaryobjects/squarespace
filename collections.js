@@ -31,13 +31,6 @@ const ProfileImage = props => {
           data-load="false"
           data-image-id="5f73a64abdc51f78805cb242"
           data-type="image"
-          style={{
-            left: "0%",
-            top: "-0.119642%",
-            width: "100%",
-            height: "100.239%",
-            position: "absolute",
-          }}
           data-image-resolution="300w"
           src={props.url}
         />
