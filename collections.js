@@ -61,31 +61,31 @@ const Links = props => {
       <p className style={{ whiteSpace: "pre-wrap" }}>
         <strong>Connect with the Author:</strong>
       </p>
-      <p className style={{ whiteSpace: "pre-wrap" }}>
+    { website && <p className style={{ whiteSpace: "pre-wrap" }}>
         <i className="fas fa-link" style={{ marginRight: "5px" }}></i>
         <a href={website} target="_blank">
           {website}
         </a>
-      </p>
-      <p className style={{ whiteSpace: "pre-wrap" }}>
+      </p> }
+    { facebook && <p className style={{ whiteSpace: "pre-wrap" }}>
         <i className="fab fa-facebook-f" style={{ marginRight: "5px" }}></i>
         <a href={facebook} target="_blank">
           {facebook}
         </a>
-      </p>
-      <p className style={{ whiteSpace: "pre-wrap" }}>
+      </p> }
+    { instagram && <p className style={{ whiteSpace: "pre-wrap" }}>
         <i className="fab fa-instagram" style={{ marginRight: "5px" }}></i>
         <a href={instagram} target="_blank">
           {instagram}
         </a>
-      </p>
-      <p className style={{ whiteSpace: "pre-wrap" }}>
+      </p> }
+    { twitter && <p className style={{ whiteSpace: "pre-wrap" }}>
         <i className="fab fa-twitter" style={{ marginRight: "5px" }}></i>
         <a
           href={ `http://twitter.com/${formatTwitter(twitter).substring(1)}` } target="_blank">
           {formatTwitter(twitter)}
         </a>
-      </p>
+      </p> }
     </div>
   );
 };
