@@ -371,8 +371,8 @@ const youngAdultAuthorManager = {
       profileImage: row['gsx$profileimage']['$t'],
       questions: [
         { name: "What's your favorite thing about meeting with readers?", value: row['gsx$whatsyourfavoritethingaboutmeetingwithreaders']['$t'] },
-        { name: "What is the weirdest question you've ever gotten from a reader?", value: row['gsx$whatistheweirdestquestionyouveevergottenfromareader']['$t'],
-        { name: "What are you most looking forward to about the Collingswood Book Festival?", value: row['gsx$whatareyoumostlookingforwardtoaboutthecollingswoodbookfestivalifyouvebeenherebefore']['$t'],
+        { name: "What is the weirdest question you've ever gotten from a reader?", value: row['gsx$whatistheweirdestquestionyouveevergottenfromareader']['$t'] },
+        { name: "What are you most looking forward to about the Collingswood Book Festival?", value: row['gsx$whatareyoumostlookingforwardtoaboutthecollingswoodbookfestivalifyouvebeenherebefore']['$t'] },
       ],
     };
   }
