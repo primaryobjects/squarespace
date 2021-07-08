@@ -49,6 +49,14 @@ const Links = props => {
       (url.startsWith('@') ? url : `@${url}`);
   };
   
+  const formatUrl = url => {
+    // Format url by extracting the first part not including spaces and including http.
+    let result = url.split(' ').map(part => part.trim()).filter(part => part.length > 0);
+    result = result.length > 0 ? result[0] : url;
+
+    return result.startsWith('http') ? result : `http://${result}`;
+  };
+
   return (
     <div className="links">
       <p className style={{ whiteSpace: "pre-wrap" }}>
@@ -56,20 +64,20 @@ const Links = props => {
       </p>
     { website && <p className style={{ whiteSpace: "pre-wrap" }}>
         <i className="fas fa-link" style={{ marginRight: "5px" }}></i>
-        <a href={website} target="_blank">
-          {website}
+        <a href={formatUrl(website)} target="_blank">
+          {formatUrl(website)}
         </a>
       </p> }
     { facebook && <p className style={{ whiteSpace: "pre-wrap" }}>
         <i className="fab fa-facebook-f" style={{ marginRight: "5px" }}></i>
-        <a href={facebook} target="_blank">
-          {facebook}
+        <a href={formatUrl(facebook)} target="_blank">
+          {formatUrl(facebook)}
         </a>
       </p> }
     { instagram && <p className style={{ whiteSpace: "pre-wrap" }}>
         <i className="fab fa-instagram" style={{ marginRight: "5px" }}></i>
-        <a href={instagram} target="_blank">
-          {instagram}
+        <a href={formatUrl(instagram)} target="_blank">
+          {formatUrl(instagram)}
         </a>
       </p> }
     { twitter && <p className style={{ whiteSpace: "pre-wrap" }}>
