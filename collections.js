@@ -247,22 +247,53 @@ const YoungAdult = props => {
   );
 }
 
+const Progress = props => {
+  const url = props.url || 'https://cdnjs.cloudflare.com/ajax/libs/bxslider/4.2.5/images/bx_loader.gif';
+  const title = props.title || "Loading...";
+
+  return (
+    <div className='spinner' style={{ marginLeft: '50%', marginTop: '20%' }}>
+      <img src={ url } title={ title }/>
+    </div>
+  );
+};
+
+const Error = props => {
+  const url = props.url || 'https://img.icons8.com/material-outlined/48/000000/database-error.png';
+  const title = props.title || "No content available.";
+
+  return (
+    <div className='no-content'>
+      <div className='no-content-icon' style={{ float: 'left' }}>
+        <img src={ url } title={ title }/>
+      </div>
+      <div className='no-content-title' style={{ paddingTop: '15px' }}>
+        { title }
+      </div>
+    </div>
+  );
+};
+
 const AuthorCollection = props => {
   const { useState, useEffect } = React;
+  const [loading, setLoading] = useState(true);
   const [data, updateData] = useState();
   const Inner = props.manager.control;
   
   useEffect(() => {
     // Load data-source and process rows.
-    const getData = async () => updateData(await load(props.manager.url));
+    const getData = async () => updateData(await load(props.manager.id));
     getData();
   }, []);
   
-  const load = async url => {
+  const load = async spreadsheetId => {
     const rows = [];
-    
-    if (url) {
-      try {
+    const defaultUrl = 'https://spreadsheets.google.com/feeds/list/[ID]/default/public/values?alt=json';
+
+    try {
+      if (spreadsheetId) {
+        const url = spreadsheetId.startsWith('http') ? spreadsheetId : defaultUrl.replace('[ID]', spreadsheetId);
+
         // Download the data-source.
         const res = await fetch(url);
     
@@ -273,11 +304,14 @@ const AuthorCollection = props => {
         // Parse each row into an object.
         data.feed.entry.forEach(row => rows.push(props.manager.parse(row)));
       }
-      catch (ex) {
-        console.error(`Error downloading and parsing url ${url}\n${ex}`);
-      }
     }
-    
+    catch (ex) {
+      console.error(`Error downloading and parsing url ${url}\n${ex}`);
+    }
+    finally {
+      setLoading(false);
+    }
+  
     return rows;
   };
 
@@ -291,20 +325,22 @@ const AuthorCollection = props => {
   return (
     <div id="author-collection">
       <div id="custom-list">
-        { data && data.length ? byTwo(data).map(row => {
-          return (
-            <div className='row sqs-row'>
-              { row.map(item => (<Inner data={item} />)) }
-            </div>
-          );
-        }) : <div>No authors found.</div> }
+        { loading ? <Progress url={props.progressUrl} title={props.progressTitle} /> : 
+          data && data.length ? byTwo(data).map(row => {
+            return (
+              <div className='row sqs-row'>
+                { row.map(item => (<Inner data={item} />)) }
+              </div>
+            );
+          }) : <Error url={props.errorUrl} title={props.errorTitle} />
+        }
       </div>
     </div>
   );
 };
 
 const authorManager = {
-  url: 'https://spreadsheets.google.com/feeds/list/1BK4XdUygRcUGAiQSne10aNjV_uLaLPT2u0NPFicCX6Q/od6/public/values?alt=json',
+  id: '1BK4XdUygRcUGAiQSne10aNjV_uLaLPT2u0NPFicCX6Q',
   control: Author,
   parse: row => {
     return {
@@ -316,7 +352,7 @@ const authorManager = {
 };
 
 const adultAuthorManager = {
-  url: 'https://spreadsheets.google.com/feeds/list/1jR6Go99u37VAE5XfhRRvLhNSG3-ikVZS9qY_IZFK0iI/default/public/values?alt=json',
+  id: '1jR6Go99u37VAE5XfhRRvLhNSG3-ikVZS9qY_IZFK0iI',
   control: Author,
   parse: row => {
     return {
@@ -335,7 +371,7 @@ const adultAuthorManager = {
 
 
 const poetAuthorManager = {
-  url: 'https://spreadsheets.google.com/feeds/list/1xWo0lsrmHYf63RfYJPkDzML0BprTVvJLK6ifhp-mXaA/default/public/values?alt=json',
+  id: '1xWo0lsrmHYf63RfYJPkDzML0BprTVvJLK6ifhp-mXaA',
   control: Poet,
   parse: row => {
     return {
@@ -351,7 +387,7 @@ const poetAuthorManager = {
 };
 
 const youngAdultAuthorManager = {
-  url: 'https://spreadsheets.google.com/feeds/list/1YRRQ4N5Eoplae7YpwNBJAIbMSzelIUURNRCjHu6pFl4/default/public/values?alt=json',
+  id: '1YRRQ4N5Eoplae7YpwNBJAIbMSzelIUURNRCjHu6pFl4',
   control: YoungAdult,
   parse: row => {
     return {
