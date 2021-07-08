@@ -94,8 +94,8 @@ const Questions = props => {
   return (
     <div className="questions">
       { props.data.map(question => {
-        return (
-          <div className='question'>
+        return question.value ? (
+          <div className='question' style={{ marginBottom: "5px" }}>
             <p style={{ whiteSpace: "pre-wrap" }}>
               <strong>{question.name}</strong>
             </p>
@@ -103,7 +103,7 @@ const Questions = props => {
               {question.value}
             </p>
           </div>
-        );
+        ) : <div/>;
       })}
     </div>
   );
