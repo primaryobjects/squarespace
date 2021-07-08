@@ -1,4 +1,3 @@
-// noprotect
 const ProfileImage = props => {
   return (
     <div
@@ -94,16 +93,18 @@ const Links = props => {
 const Questions = props => {
   return (
     <div className="questions">
-      props.data.map(question => {
-          return (
-            <p className style={{ whiteSpace: "pre-wrap" }}>
+      { props.data.map(question => {
+        return (
+          <div className='question'>
+            <p style={{ whiteSpace: "pre-wrap" }}>
               <strong>{question.name}</strong>
             </p>
-            <p> style={{ whiteSpace: "pre-wrap" }}
+            <p style={{ whiteSpace: "pre-wrap" }}>
               {question.value}
             </p>
-          );
-      });
+          </div>
+        );
+      })}
     </div>
   );
 };
@@ -361,7 +362,7 @@ const youngAdultAuthorManager = {
   control: YoungAdult,
   parse: row => {
     return {
-      name: row['gsx$poet']['$t'],
+      name: row['gsx$author']['$t'],
       biography: row['gsx$biography']['$t'],
       bookInformation: row['gsx$bookinformation']['$t'],
       website: row['gsx$website']['$t'],
