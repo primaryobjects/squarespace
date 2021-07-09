@@ -350,6 +350,7 @@ const AuthorCollection = props => {
 const commonManager = {
   fields: [
     'author',
+    'poet',
     'biography',
     'bookInformation',
     'website',
@@ -367,13 +368,18 @@ const commonManager = {
   value: (row, field) => {
     const prefix = 'gsx$';
     const suffix = '$t';
+    const key = prefix + field.toLowerCase();
 
     // Parse a field from the row.
-    return row[prefix + field.toLowerCase()][suffix];
+    return row[key] ? row[key][suffix] : null;
   },
 
   parse: (row, fields = commonManager.fields) => {
     const result = {};
+    const names = [
+      'author', 
+      'poet'
+    ];
 
     // Convert the fields to an array, if needed.
     fields = typeof(fields) === 'object' ? fields : [fields];
@@ -381,7 +387,9 @@ const commonManager = {
 
     // Assign each value to the result object.
     fields.forEach((field, i) => {
-      result[field] = values[i];
+      // Rename the field key 'author' and 'poet' to 'name'.
+      field = names.includes(field) ? 'name' : field;
+      result[field] = result[field] || values[i];
     });
 
     return result;
@@ -393,9 +401,9 @@ const authorManager = {
   control: Author,
   parse: row => {
     return {
-      date: row['gsx$date']['$t'],
-      name: row['gsx$name']['$t'],
-      url: row['gsx$imageurl']['$t'],
+      date: parse(row, 'date'),
+      name: parse(row, 'name'),
+      url: parse(row, 'imageurl'),
     };
   }
 };
@@ -405,7 +413,7 @@ const adultAuthorManager = {
   control: Author,
   parse: row => Object.assign(
     commonManager.parse(row),
-    commonManager.parse(row, 'bookImage')
+    commonManager.parse(row, 'bookImage'),
   )
 };
 
