@@ -347,14 +347,16 @@ const AuthorCollection = props => {
   );
 };
 
+const parse = (row, field) => row['gsx$' + field] ? row['gsx$' + field]['$t'] : null;
+
 const authorManager = {
   id: '1BK4XdUygRcUGAiQSne10aNjV_uLaLPT2u0NPFicCX6Q',
   control: Author,
   parse: row => {
     return {
-      date: row['gsx$date']['$t'],
-      name: row['gsx$name']['$t'],
-      url: row['gsx$imageurl']['$t'],
+      date: parse(row, 'date'),
+      name: parse(row, 'name'),
+      url: parse(row, 'imageurl'),
     };
   }
 };
@@ -364,15 +366,15 @@ const adultAuthorManager = {
   control: Author,
   parse: row => {
     return {
-      name: row['gsx$author']['$t'],
-      biography: row['gsx$biography']['$t'],
-      bookInformation: row['gsx$bookinformation']['$t'],
-      website: row['gsx$website']['$t'],
-      facebook: row['gsx$facebook']['$t'],
-      instagram: row['gsx$instagram']['$t'],
-      twitter: row['gsx$twitter']['$t'],
-      profileImage: row['gsx$profileimage']['$t'],
-      bookImage: row['gsx$bookimage']['$t'],
+      name: parse(row, 'author'),
+      biography: parse(row, 'biography'),
+      bookInformation: parse(row, 'bookinformation'),
+      website: parse(row, 'website'),
+      facebook: parse(row, 'facebook'),
+      instagram: parse(row, 'instagram'),
+      twitter: parse(row, 'twitter'),
+      profileImage: parse(row, 'profileimage'),
+      bookImage: parse(row, 'bookimage'),
     };
   }
 };
@@ -383,13 +385,13 @@ const poetAuthorManager = {
   control: Poet,
   parse: row => {
     return {
-      name: row['gsx$poet']['$t'],
-      biography: row['gsx$biography']['$t'],
-      website: row['gsx$website']['$t'],
-      facebook: row['gsx$facebook']['$t'],
-      instagram: row['gsx$instagram']['$t'],
-      twitter: row['gsx$twitter']['$t'],
-      profileImage: row['gsx$profileimage']['$t'],
+      name: parse(row, 'poet'),
+      biography: parse(row, 'biography'),
+      website: parse(row, 'website'),
+      facebook: parse(row, 'facebook'),
+      instagram: parse(row, 'instagram'),
+      twitter: parse(row, 'twitter'),
+      profileImage: parse(row, 'profileimage'),
     };
   }
 };
@@ -399,18 +401,18 @@ const youngAdultAuthorManager = {
   control: YoungAdult,
   parse: row => {
     return {
-      name: row['gsx$author']['$t'],
-      biography: row['gsx$biography']['$t'],
-      bookInformation: row['gsx$bookinformation']['$t'],
-      website: row['gsx$website']['$t'],
-      facebook: row['gsx$facebook']['$t'],
-      instagram: row['gsx$instagram']['$t'],
-      twitter: row['gsx$twitter']['$t'],
-      profileImage: row['gsx$profileimage']['$t'],
+      name: parse(row, 'author'),
+      biography: parse(row, 'biography'),
+      bookInformation: parse(row, 'bookinformation'),
+      website: parse(row, 'website'),
+      facebook: parse(row, 'facebook'),
+      instagram: parse(row, 'instagram'),
+      twitter: parse(row, 'twitter'),
+      profileImage: parse(row, 'profileimage'),
       questions: [
-        { name: "What's your favorite thing about meeting with readers?", value: row['gsx$whatsyourfavoritethingaboutmeetingwithreaders']['$t'] },
-        { name: "What is the weirdest question you've ever gotten from a reader?", value: row['gsx$whatistheweirdestquestionyouveevergottenfromareader']['$t'] },
-        { name: "What are you most looking forward to about the Collingswood Book Festival?", value: row['gsx$whatareyoumostlookingforwardtoaboutthecollingswoodbookfestivalifyouvebeenherebefore']['$t'] },
+        { name: "What's your favorite thing about meeting with readers?", value: parse(row, 'whatsyourfavoritethingaboutmeetingwithreaders') },
+        { name: "What is the weirdest question you've ever gotten from a reader?", value: parse(row, 'whatistheweirdestquestionyouveevergottenfromareader') },
+        { name: "What are you most looking forward to about the Collingswood Book Festival?", value: parse(row, 'whatareyoumostlookingforwardtoaboutthecollingswoodbookfestivalifyouvebeenherebefore') },
       ],
     };
   }
