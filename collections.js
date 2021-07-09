@@ -347,6 +347,47 @@ const AuthorCollection = props => {
   );
 };
 
+const commonManager = {
+  fields: [
+    'author',
+    'biography',
+    'bookInformation',
+    'website',
+    'facebook',
+    'instagram',
+    'twitter',
+    'profileImage'
+  ],
+
+  values: (row, fields) => {
+    // Parse each field from the row.
+    return fields.map(field => commonManager.value(row, field));
+  },
+
+  value: (row, field) => {
+    const prefix = 'gsx$';
+    const suffix = '$t';
+
+    // Parse a field from the row.
+    return row[prefix + field.toLowerCase()][suffix];
+  },
+
+  parse: (row, fields = commonManager.fields) => {
+    const result = {};
+
+    // Convert the fields to an array, if needed.
+    fields = typeof(fields) === 'object' ? fields : [fields];
+    const values = commonManager.values(row, fields);
+
+    // Assign each value to the result object.
+    fields.forEach((field, i) => {
+      result[field] = values[i];
+    });
+
+    return result;
+  }
+};
+
 const authorManager = {
   id: '1BK4XdUygRcUGAiQSne10aNjV_uLaLPT2u0NPFicCX6Q',
   control: Author,
@@ -362,56 +403,36 @@ const authorManager = {
 const adultAuthorManager = {
   id: '1jR6Go99u37VAE5XfhRRvLhNSG3-ikVZS9qY_IZFK0iI',
   control: Author,
-  parse: row => {
-    return {
-      name: row['gsx$author']['$t'],
-      biography: row['gsx$biography']['$t'],
-      bookInformation: row['gsx$bookinformation']['$t'],
-      website: row['gsx$website']['$t'],
-      facebook: row['gsx$facebook']['$t'],
-      instagram: row['gsx$instagram']['$t'],
-      twitter: row['gsx$twitter']['$t'],
-      profileImage: row['gsx$profileimage']['$t'],
-      bookImage: row['gsx$bookimage']['$t'],
-    };
-  }
+  parse: row => Object.assign(
+    commonManager.parse(row),
+    commonManager.parse(row, 'bookImage')
+  )
 };
-
 
 const poetAuthorManager = {
   id: '1xWo0lsrmHYf63RfYJPkDzML0BprTVvJLK6ifhp-mXaA',
   control: Poet,
-  parse: row => {
-    return {
-      name: row['gsx$poet']['$t'],
-      biography: row['gsx$biography']['$t'],
-      website: row['gsx$website']['$t'],
-      facebook: row['gsx$facebook']['$t'],
-      instagram: row['gsx$instagram']['$t'],
-      twitter: row['gsx$twitter']['$t'],
-      profileImage: row['gsx$profileimage']['$t'],
-    };
-  }
+  parse: row => commonManager.parse(row)
 };
 
 const youngAdultAuthorManager = {
   id: '1YRRQ4N5Eoplae7YpwNBJAIbMSzelIUURNRCjHu6pFl4',
   control: YoungAdult,
-  parse: row => {
-    return {
-      name: row['gsx$author']['$t'],
-      biography: row['gsx$biography']['$t'],
-      bookInformation: row['gsx$bookinformation']['$t'],
-      website: row['gsx$website']['$t'],
-      facebook: row['gsx$facebook']['$t'],
-      instagram: row['gsx$instagram']['$t'],
-      twitter: row['gsx$twitter']['$t'],
-      profileImage: row['gsx$profileimage']['$t'],
-      questions: [
-        { name: "What's your favorite thing about meeting with readers?", value: row['gsx$whatsyourfavoritethingaboutmeetingwithreaders']['$t'] },
-        { name: "What is the weirdest question you've ever gotten from a reader?", value: row['gsx$whatistheweirdestquestionyouveevergottenfromareader']['$t'] },
-        { name: "What are you most looking forward to about the Collingswood Book Festival?", value: row['gsx$whatareyoumostlookingforwardtoaboutthecollingswoodbookfestivalifyouvebeenherebefore']['$t'] },
-      ],
-    };
-  }
+  parse: row => Object.assign(
+    commonManager.parse(row),
+    { questions: [
+      {
+        name: "What's your favorite thing about meeting with readers?", 
+        value: commonManager.value(row, 'whatsyourfavoritethingaboutmeetingwithreaders')
+      },
+      { 
+        name: "What is the weirdest question you've ever gotten from a reader?", 
+        value: commonManager.value(row, 'whatistheweirdestquestionyouveevergottenfromareader') 
+      },
+      { 
+        name: "What are you most looking forward to about the Collingswood Book Festival?", 
+        value: commonManager.value(row, 'whatareyoumostlookingforwardtoaboutthecollingswoodbookfestivalifyouvebeenherebefore') 
+      },
+    ]}
+  ),
 };
