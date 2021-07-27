@@ -131,12 +131,13 @@ const Book = (props) => {
 
   return (
     <div className="book">
+      { !props.isHideText &&
       <p className style={{ whiteSpace: "pre-wrap" }}>
         <strong>{props.title || "Buy the Book"}:</strong>
       </p>
       <p className style={{ whiteSpace: "pre-wrap" }}>
         {bookInformation}
-      </p>
+      </p> }
       <div className="sqs-block-content" id="yui_3_17_2_1_1624821117171_518">
         <img src={bookImage} style={{ maxWidth: "200px" }} />
       </div>
@@ -176,7 +177,7 @@ const Author = (props) => {
                 {author.biography}
               </p>
               <Links data={author} />
-              {!props.isHideBook && <Book data={author} />}
+              {!props.isHideBook && <Book data={author} isHideText={props.isHideBookText} />}
             </div>
           </div>
         </div>
@@ -388,7 +389,7 @@ const AuthorCollection = (props) => {
             return (
               <div className="row sqs-row">
                 {row.map((item) => (
-                  <Inner data={item} isHideBook={props.isHideBook} />
+                  <Inner data={item} isHideBook={props.isHideBook} isHideBookText={props.isHideBookText} />
                 ))}
               </div>
             );
