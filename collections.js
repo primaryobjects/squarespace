@@ -132,12 +132,14 @@ const Book = (props) => {
   return (
     <div className="book">
       { !props.isHideText &&
-      <p className style={{ whiteSpace: "pre-wrap" }}>
-        <strong>{props.title || "Buy the Book"}:</strong>
-      </p>
-      <p className style={{ whiteSpace: "pre-wrap" }}>
-        {bookInformation}
-      </p> }
+      <div class='bookText'>
+        <p className style={{ whiteSpace: "pre-wrap" }}>
+          <strong>{props.title || "Buy the Book"}:</strong>
+        </p>
+        <p className style={{ whiteSpace: "pre-wrap" }}>
+          {bookInformation}
+        </p>
+      </div> }
       <div className="sqs-block-content" id="yui_3_17_2_1_1624821117171_518">
         <img src={bookImage} style={{ maxWidth: "200px" }} />
       </div>
