@@ -5,43 +5,46 @@ const ProfileImage = (props) => {
       data-test="image-block-inline-outer-wrapper"
       id="yui_3_17_2_1_1624821117171_517"
     >
-      <figure
-        className="
-        sqs-block-image-figure
-        intrinsic
-        "
-        style={{ maxWidth: "828px" }}
-        id="yui_3_17_2_1_1624821117171_516"
-      >
-        <div
-          style={{ paddingBottom: "113.889%", overflow: "hidden" }}
+      {props.url && (
+        <figure
           className="
-        image-block-wrapper
-        has-aspect-ratio
-        "
-          data-animation-role="image"
-          id="yui_3_17_2_1_1624821117171_515"
+          sqs-block-image-figure
+          intrinsic
+          "
+          style={{ maxWidth: "828px" }}
+          id="yui_3_17_2_1_1624821117171_516"
         >
-          <img
-            className="thumb-image loaded"
-            data-src={props.url}
-            data-image={props.url}
-            data-image-dimensions="828x943"
-            data-image-focal-point="0.5,0.5"
-            data-load="false"
-            data-image-id="5f73a64abdc51f78805cb242"
-            data-type="image"
-            data-image-resolution="300w"
-            src={props.url}
-          />
-        </div>
-      </figure>
+          <div
+            style={{ paddingBottom: "113.889%", overflow: "hidden" }}
+            className="
+          image-block-wrapper
+          has-aspect-ratio
+          "
+            data-animation-role="image"
+            id="yui_3_17_2_1_1624821117171_515"
+          >
+            <img
+              className="thumb-image loaded"
+              data-src={props.url}
+              data-image={props.url}
+              data-image-dimensions="828x943"
+              data-image-focal-point="0.5,0.5"
+              data-load="false"
+              data-image-id="5f73a64abdc51f78805cb242"
+              data-type="image"
+              data-image-resolution="300w"
+              src={props.url}
+            />
+          </div>
+        </figure>
+      )}
     </div>
   );
 };
 
 const Links = (props) => {
   const { website, facebook, instagram, twitter } = props.data;
+  const isLinks = website || facebook || instagram || twitter;
 
   const formatTwitter = (url) => {
     // Extract Twitter username
@@ -65,43 +68,47 @@ const Links = (props) => {
 
   return (
     <div className="links">
-      <p className style={{ whiteSpace: "pre-wrap" }}>
-        <strong>Connect with the Author:</strong>
-      </p>
-      {website && (
+      { isLinks && (
+      <div className="links-content">
         <p className style={{ whiteSpace: "pre-wrap" }}>
-          <i className="fas fa-link" style={{ marginRight: "5px" }}></i>
-          <a href={formatUrl(website)} target="_blank">
-            {formatUrl(website)}
-          </a>
+          <strong>Connect with the Author:</strong>
         </p>
-      )}
-      {facebook && (
-        <p className style={{ whiteSpace: "pre-wrap" }}>
-          <i className="fab fa-facebook-f" style={{ marginRight: "5px" }}></i>
-          <a href={formatUrl(facebook)} target="_blank">
-            {formatUrl(facebook)}
-          </a>
-        </p>
-      )}
-      {instagram && (
-        <p className style={{ whiteSpace: "pre-wrap" }}>
-          <i className="fab fa-instagram" style={{ marginRight: "5px" }}></i>
-          <a href={formatUrl(instagram)} target="_blank">
-            {formatUrl(instagram)}
-          </a>
-        </p>
-      )}
-      {twitter && (
-        <p className style={{ whiteSpace: "pre-wrap" }}>
-          <i className="fab fa-twitter" style={{ marginRight: "5px" }}></i>
-          <a
-            href={`http://twitter.com/${formatTwitter(twitter).substring(1)}`}
-            target="_blank"
-          >
-            {formatTwitter(twitter)}
-          </a>
-        </p>
+        {website && (
+          <p className style={{ whiteSpace: "pre-wrap" }}>
+            <i className="fas fa-link" style={{ marginRight: "5px" }}></i>
+            <a href={formatUrl(website)} target="_blank">
+              {formatUrl(website)}
+            </a>
+          </p>
+        )}
+        {facebook && (
+          <p className style={{ whiteSpace: "pre-wrap" }}>
+            <i className="fab fa-facebook-f" style={{ marginRight: "5px" }}></i>
+            <a href={formatUrl(facebook)} target="_blank">
+              {formatUrl(facebook)}
+            </a>
+          </p>
+        )}
+        {instagram && (
+          <p className style={{ whiteSpace: "pre-wrap" }}>
+            <i className="fab fa-instagram" style={{ marginRight: "5px" }}></i>
+            <a href={formatUrl(instagram)} target="_blank">
+              {formatUrl(instagram)}
+            </a>
+          </p>
+        )}
+        {twitter && (
+          <p className style={{ whiteSpace: "pre-wrap" }}>
+            <i className="fab fa-twitter" style={{ marginRight: "5px" }}></i>
+            <a
+              href={`http://twitter.com/${formatTwitter(twitter).substring(1)}`}
+              target="_blank"
+            >
+              {formatTwitter(twitter)}
+            </a>
+          </p>
+        )}
+      </div>
       )}
     </div>
   );
@@ -131,18 +138,21 @@ const Book = (props) => {
 
   return (
     <div className="book">
-      { !props.isHideText &&
-      <div class='bookText'>
-        <p className style={{ whiteSpace: "pre-wrap" }}>
-          <strong>{props.title || "Buy the Book"}:</strong>
-        </p>
-        <p className style={{ whiteSpace: "pre-wrap" }}>
-          {bookInformation}
-        </p>
-      </div> }
-      <div className="sqs-block-content" id="yui_3_17_2_1_1624821117171_518">
-        <img src={bookImage} style={{ maxWidth: "200px" }} />
-      </div>
+      {!props.isHideText && bookInformation && (
+        <div class="bookText">
+          <p className style={{ whiteSpace: "pre-wrap" }}>
+            <strong>{props.title || "Buy the Book"}:</strong>
+          </p>
+          <p className style={{ whiteSpace: "pre-wrap" }}>
+            {bookInformation}
+          </p>
+        </div>
+      )}
+      {bookImage && (
+        <div className="sqs-block-content" id="yui_3_17_2_1_1624821117171_518">
+          <img src={bookImage} style={{ maxWidth: "200px" }} />
+        </div>
+      )}
     </div>
   );
 };
@@ -179,7 +189,9 @@ const Author = (props) => {
                 {author.biography}
               </p>
               <Links data={author} />
-              {!props.isHideBook && <Book data={author} isHideText={props.isHideBookText} />}
+              {!props.isHideBook && (
+                <Book data={author} isHideText={props.isHideBookText} />
+              )}
             </div>
           </div>
         </div>
@@ -391,7 +403,11 @@ const AuthorCollection = (props) => {
             return (
               <div className="row sqs-row">
                 {row.map((item) => (
-                  <Inner data={item} isHideBook={props.isHideBook} isHideBookText={props.isHideBookText} />
+                  <Inner
+                    data={item}
+                    isHideBook={props.isHideBook}
+                    isHideBookText={props.isHideBookText}
+                  />
                 ))}
               </div>
             );
@@ -486,6 +502,24 @@ const youngAdultAuthorManager = {
           ),
         },
       ],
+    };
+  },
+};
+
+const childAuthorManager = {
+  id: "1owPi68R1aN3M4ZM5-3uJMH9GQpo_3t8mWBeXIEtR-Dw",
+  control: Author,
+  parse: (row) => {
+    return {
+      name: parse(row, "authorname"),
+      website: parse(row, "authorwebsite"),
+      facebook: parse(row, "facebook"),
+      instagram: parse(row, "instagram"),
+      twitter: parse(row, "twitter"),
+      profileImage: parse(row, "profileimage"),
+      bookInformation: [...Array(6)]
+        .map((_, i) => `${parse(row, `title-book${i + 1}`)}`)
+        .join("\n").trim(),
     };
   },
 };
