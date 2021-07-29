@@ -198,7 +198,11 @@ const Author = (props) => {
               </p>
               <Links data={author} />
               {!props.isHideBook && (
-                <Book data={author} isHideText={props.isHideBookText} />
+                <Book
+                  data={author}
+                  title={props.booksHeading}
+                  isHideText={props.isHideBookText}
+                />
               )}
             </div>
           </div>
@@ -299,7 +303,9 @@ const YoungAdult = (props) => {
               </p>
               <Questions data={author.questions} />
               <Links data={author} />
-              {!props.isHideBook && <Book data={author} />}
+              {!props.isHideBook && (
+                <Book data={author} title={props.booksHeading} />
+              )}
             </div>
           </div>
         </div>
@@ -415,6 +421,7 @@ const AuthorCollection = (props) => {
                     data={item}
                     isHideBook={props.isHideBook}
                     isHideBookText={props.isHideBookText}
+                    booksHeading={props.booksHeading}
                   />
                 ))}
               </div>
