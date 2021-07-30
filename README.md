@@ -38,6 +38,19 @@ The following options are available on the `AuthorCollection` component.
 
 - booksHeading: Heading text for book information section. *(default is "Buy the Book")*
 
+#### Custom Example
+
+An example of using the options is shown below.
+
+```js
+ReactDOM.render(<AuthorCollection 
+                manager={adultAuthorManager}
+                isHideBook={False}
+                isHideBookText={False}
+                booksHeading="Latest Books"
+                />, document.getElementById('root'));
+```
+
 ## Links
 
 [Squarespace Manager](https://dory-crow-msc6.squarespace.com/config/pages)
