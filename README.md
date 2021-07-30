@@ -16,7 +16,29 @@ A collection of render blocks for use on Squarespace.
 9. Paste the contents of from [index.html](index.html) into the **Code** block.
 10. Save the changes.
 
-# Links
+## Inserting an Author Collection
+
+The author collection component can be added to a page by following the quick start guide above. The component is added to the page via the following code:
+
+```js
+ReactDOM.render(<AuthorCollection 
+                manager={adultAuthorManager}
+                />, document.getElementById('root'));
+```
+
+## Options
+
+The following options are available on the `AuthorCollection` component.
+
+- manager: Google spreadsheet data manager object and field parser. See examples for [adultAuthorManager](https://github.com/primaryobjects/squarespace/blob/main/collections.js#L453) and [childAuthorManager](https://github.com/primaryobjects/squarespace/blob/main/collections.js#L524).
+
+- isHideBook: True if book details should not be displayed for the author. *(default is False)*
+
+- isHideBookText: True if only the book image should be displayed, not the book text information including "Buy the Book". *(default is False)*
+
+- booksHeading: Heading text for book information section. *(default is "Buy the Book")*
+
+## Links
 
 [Squarespace Manager](https://dory-crow-msc6.squarespace.com/config/pages)
 
