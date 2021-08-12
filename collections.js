@@ -363,11 +363,15 @@ const AuthorCollection = (props) => {
   useEffect(() => {
     // Load data-source and process rows.
     const getData = async () =>
-      updateData(await load(props.id || props.manager.id));
+      updateData(await load(props.id || props.manager.id, props.retries || 10));
     getData();
   }, []);
 
-  const load = async (spreadsheetId) => {
+  const sleep = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  };
+
+  const load = async (spreadsheetId, retries) => {
     const rows = [];
     const defaultUrl =
       props.url ||
@@ -379,18 +383,28 @@ const AuthorCollection = (props) => {
           ? spreadsheetId
           : defaultUrl.replace("[ID]", spreadsheetId);
 
-        // Download the data-source.
-        const res = await fetch(url);
+        let count = 0;
+        while (count++ < retries) {
+          try {
+            // Download the data-source.
+            const res = await fetch(url);
 
-        // Convert to JSON.
-        const data = await res.json();
-        //console.log(data.feed.entry);
+            // Convert to JSON.
+            const data = await res.json();
+            //console.log(data.feed.entry);
 
-        // Parse each row into an object.
-        data.feed.entry.forEach((row) => rows.push(props.manager.parse(row)));
+            // Parse each row into an object.
+            data.feed.entry.forEach((row) => rows.push(props.manager.parse(row)));
+            
+            break;
+          } catch (ex1) {
+            console.warn(`Unable to fetch ${url}, attempt ${count}/${retries}.`);
+            await sleep(1000);
+          }
+        }
       }
-    } catch (ex) {
-      console.error(`Error downloading and parsing url ${url}\n${ex}`);
+    } catch (ex2) {
+      console.error(`Error downloading and parsing url ${url}\n${ex2}`);
     } finally {
       setLoading(false);
     }
