@@ -38,6 +38,8 @@ The following options are available on the `AuthorCollection` component.
 
 - booksHeading: Heading text for book information section. *(default is "Buy the Book")*
 
+- retries: Number of retry attempts to download the Google spreadsheet. *(default is 10)*
+
 #### Custom Example
 
 An example of using the options is shown below.
