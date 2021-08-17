@@ -363,7 +363,7 @@ const AuthorCollection = (props) => {
   useEffect(() => {
     // Load data-source and process rows.
     const getData = async () =>
-      updateData(await load(props.id || props.manager.id, props.retries || 10));
+      updateData(await load(props.manager.name, props.id || props.manager.id, props.retries || 10));
     getData();
   }, []);
 
@@ -371,10 +371,12 @@ const AuthorCollection = (props) => {
     return new Promise(resolve => setTimeout(resolve, ms));
   };
 
-  const load = async (spreadsheetId, retries) => {
+  const load = async (name, spreadsheetId, retries) => {
     const rows = [];
+    const defaultCdn = `https://cdn.jsdelivr.net/gh/primaryobjects/squarespace/data/${name}.json`;
     const defaultUrl =
       props.url ||
+      defaultCdn ||
       "https://spreadsheets.google.com/feeds/list/[ID]/default/public/values?alt=json";
 
     try {
@@ -465,6 +467,7 @@ const authorManager = {
 };
 
 const adultAuthorManager = {
+  name: 'adult',
   id: "1jR6Go99u37VAE5XfhRRvLhNSG3-ikVZS9qY_IZFK0iI",
   control: Author,
   parse: (row) => {
@@ -483,6 +486,7 @@ const adultAuthorManager = {
 };
 
 const poetAuthorManager = {
+  name: 'poet',
   id: "1xWo0lsrmHYf63RfYJPkDzML0BprTVvJLK6ifhp-mXaA",
   control: Poet,
   parse: (row) => {
@@ -499,6 +503,7 @@ const poetAuthorManager = {
 };
 
 const youngAdultAuthorManager = {
+  name: 'youngAdult',
   id: "1YRRQ4N5Eoplae7YpwNBJAIbMSzelIUURNRCjHu6pFl4",
   control: YoungAdult,
   parse: (row) => {
@@ -536,6 +541,7 @@ const youngAdultAuthorManager = {
 };
 
 const childAuthorManager = {
+  name: 'child',
   id: "1owPi68R1aN3M4ZM5-3uJMH9GQpo_3t8mWBeXIEtR-Dw",
   control: Author,
   parse: (row) => {
