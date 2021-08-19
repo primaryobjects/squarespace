@@ -373,11 +373,11 @@ const AuthorCollection = (props) => {
 
   const load = async (name, spreadsheetId, retries) => {
     const rows = [];
-    const defaultCdn = `https://cdn.jsdelivr.net/gh/primaryobjects/squarespace/data/${name}.json`;
+    const defaultCdn = `https://cdn.jsdelivr.net/gh/primaryobjects/squarespace/data/${name}.csv`;
     const defaultUrl =
       props.url ||
       defaultCdn ||
-      "https://spreadsheets.google.com/feeds/list/[ID]/default/public/values?alt=json";
+      "https://docs.google.com/spreadsheets/d/e/[ID]/pub?output=csv";
 
     try {
       if (spreadsheetId) {
@@ -389,15 +389,19 @@ const AuthorCollection = (props) => {
         while (count++ < retries) {
           try {
             // Download the data-source.
-            const res = await fetch(url);
-
-            // Convert to JSON.
-            const data = await res.json();
-            //console.log(data.feed.entry);
+            const csv = await new Promise(resolve => {
+              Papa.parse(url, {
+                download: true,
+                header: true,
+                complete: function(results) {
+                  resolve(results);
+                }
+              });
+            });
 
             // Parse each row into an object.
-            data.feed.entry.forEach((row) => rows.push(props.manager.parse(row)));
-            
+            csv.data.forEach((row) => rows.push(props.manager.parse(row)));
+
             break;
           } catch (ex1) {
             console.warn(`Unable to fetch ${url}, attempt ${count}/${retries}.`);
@@ -452,7 +456,7 @@ const AuthorCollection = (props) => {
 };
 
 const parse = (row, field) =>
-  row["gsx$" + field] ? row["gsx$" + field]["$t"] : null;
+  row[field] ? row[field] : null;
 
 const authorManager = {
   id: "1BK4XdUygRcUGAiQSne10aNjV_uLaLPT2u0NPFicCX6Q",
@@ -468,71 +472,71 @@ const authorManager = {
 
 const adultAuthorManager = {
   name: 'adult',
-  id: "1jR6Go99u37VAE5XfhRRvLhNSG3-ikVZS9qY_IZFK0iI",
+  id: "2PACX-1vSy8LiifhZPF8eJjTB7Pk0Jfvpxew3tfQ6pjlMiMF17Sbfw85dpaSq0TK-aKTNe7eQkiXNFdA7bghp5",
   control: Author,
   parse: (row) => {
     return {
-      name: parse(row, "author"),
-      biography: parse(row, "biography"),
-      bookInformation: parse(row, "bookinformation"),
-      website: parse(row, "website"),
-      facebook: parse(row, "facebook"),
-      instagram: parse(row, "instagram"),
-      twitter: parse(row, "twitter"),
-      profileImage: parse(row, "profileimage"),
-      bookImage: parse(row, "bookimage"),
+      name: parse(row, "Author"),
+      biography: parse(row, "Biography"),
+      bookInformation: parse(row, "Book Information"),
+      website: parse(row, "Website"),
+      facebook: parse(row, "Facebook"),
+      instagram: parse(row, "Instagram"),
+      twitter: parse(row, "Twitter"),
+      profileImage: parse(row, "Profile Image"),
+      bookImage: parse(row, "Book Image"),
     };
   },
 };
 
 const poetAuthorManager = {
   name: 'poet',
-  id: "1xWo0lsrmHYf63RfYJPkDzML0BprTVvJLK6ifhp-mXaA",
+  id: "2PACX-1vQuT1uVIb3aMD3bxnpkXMKVzEc9LSKGLdRRvM53VXDIANVx2l5TEvH7OciFC7rHjZ3FWuietaugkjji",
   control: Poet,
   parse: (row) => {
     return {
-      name: parse(row, "poet"),
-      biography: parse(row, "biography"),
-      website: parse(row, "website"),
-      facebook: parse(row, "facebook"),
-      instagram: parse(row, "instagram"),
-      twitter: parse(row, "twitter"),
-      profileImage: parse(row, "profileimage"),
+      name: parse(row, "Poet"),
+      biography: parse(row, "Biography"),
+      website: parse(row, "Website"),
+      facebook: parse(row, "Facebook"),
+      instagram: parse(row, "Instagram"),
+      twitter: parse(row, "Twitter"),
+      profileImage: parse(row, "Profile Image"),
     };
   },
 };
 
 const youngAdultAuthorManager = {
   name: 'youngAdult',
-  id: "1YRRQ4N5Eoplae7YpwNBJAIbMSzelIUURNRCjHu6pFl4",
+  id: "2PACX-1vStJm3bQ8MQ3VrLxg40BpUnUKltukDsih0gWPStoZAcXc82utOpkB1125mrqx_qPrDBTFj129EFaFv2",
   control: YoungAdult,
   parse: (row) => {
     return {
-      name: parse(row, "author"),
-      biography: parse(row, "biography"),
-      bookInformation: parse(row, "bookinformation"),
-      website: parse(row, "website"),
-      facebook: parse(row, "facebook"),
-      instagram: parse(row, "instagram"),
-      twitter: parse(row, "twitter"),
-      profileImage: parse(row, "profileimage"),
+      name: parse(row, "Author"),
+      biography: parse(row, "Biography"),
+      bookInformation: parse(row, "Book Information"),
+      website: parse(row, "Website"),
+      facebook: parse(row, "Facebook"),
+      instagram: parse(row, "Instagram"),
+      twitter: parse(row, "Twitter"),
+      profileImage: parse(row, "Profile Image"),
       questions: [
         {
           name: "What's your favorite thing about meeting with readers?",
-          value: parse(row, "whatsyourfavoritethingaboutmeetingwithreaders"),
+          value: parse(row, "What's your favorite thing about meeting with readers?"),
         },
         {
           name: "What is the weirdest question you've ever gotten from a reader?",
           value: parse(
             row,
-            "whatistheweirdestquestionyouveevergottenfromareader"
+            "What is the weirdest question you've ever gotten from a reader?"
           ),
         },
         {
           name: "What are you most looking forward to about the Collingswood Book Festival?",
           value: parse(
             row,
-            "whatareyoumostlookingforwardtoaboutthecollingswoodbookfestivalifyouvebeenherebefore"
+            "What are you most looking forward to about the Collingswood Book Festival? (if you've been here before)"
           ),
         },
       ],
@@ -542,19 +546,20 @@ const youngAdultAuthorManager = {
 
 const childAuthorManager = {
   name: 'child',
-  id: "1owPi68R1aN3M4ZM5-3uJMH9GQpo_3t8mWBeXIEtR-Dw",
+  id: "2PACX-1vR8L4a2asSglWwhj8iZXyaFt_pGavdgZRMx6C5rN8HDw8AnrKWCQUR6vrNIIdOhboaIjn3OeFwBlJ3I",
   control: Author,
   parse: (row) => {
     return {
-      name: parse(row, "authorname"),
-      website: parse(row, "authorwebsite"),
-      facebook: parse(row, "facebook"),
-      instagram: parse(row, "instagram"),
-      twitter: parse(row, "twitter"),
-      profileImage: parse(row, "profileimage"),
+      name: parse(row, "Author Name"),
+      website: parse(row, "Author Website"),
+      facebook: parse(row, "Facebook"),
+      instagram: parse(row, "Instagram"),
+      twitter: parse(row, "Twitter"),
+      profileImage: parse(row, "Profile Image"),
       bookInformation: [...Array(6)]
-        .map((_, i) => `${parse(row, `title-book${i + 1}`)}`)
+        .map((_, i) => `${parse(row, `Title - Book ${i + 1}`)}`)
         .join("\n")
+        .replace(/null/g, '')
         .trim(),
     };
   },
