@@ -15,6 +15,7 @@ const SpreadsheetUpdate = (props) => {
   const { useState, useEffect } = React;
   const [loading, setLoading] = useState();
   const [apiKey, setApiKey] = useState("");
+  const [spreadsheetId, setSpreadsheetId] = useState("");
   const [status, setStatus] = useState("");
 
   const sleep = (ms) => {
@@ -22,7 +23,6 @@ const SpreadsheetUpdate = (props) => {
   };
 
   const onUpdate = async (e) => {
-    const spreadsheetId = "2PACX-1vSy8LiifhZPF8eJjTB7Pk0Jfvpxew3tfQ6pjlMiMF17Sbfw85dpaSq0TK-aKTNe7eQkiXNFdA7bghp5";
     const retries = 10;
     const defaultUrl =
       props.url ||
@@ -92,6 +92,18 @@ const SpreadsheetUpdate = (props) => {
               id="githubApiKey"
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
+            />
+          </div>
+          <div class="mb-3">
+            <label for="spreadSheetId" class="form-label">
+              Spreadsheet ID
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              id="spreadsheetId"
+              value={spreadsheetId}
+              onChange={(e) => setSpreadsheetId(e.target.value)}
             />
           </div>
           <button type="submit" class="btn btn-primary" onClick={onUpdate}>
