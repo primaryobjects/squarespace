@@ -519,7 +519,7 @@ const youngAdultAuthorManager = {
       facebook: parse(row, "Facebook"),
       instagram: parse(row, "Instagram"),
       twitter: parse(row, "Twitter"),
-      profileImage: parse(row, "Profile Image"),
+      profileImage: parse(row, "ProfileImage"),
       questions: [
         {
           name: "What's your favorite thing about meeting with readers?",
