@@ -21,7 +21,7 @@ A collection of render blocks for use on Squarespace.
 The author collection component can be added to a page by following the quick start guide above. The component is added to the page via the following code:
 
 ```js
-ReactDOM.render(<AuthorCollection 
+ReactDOM.render(<AuthorCollection
                 manager={adultAuthorManager}
                 />, document.getElementById('root'));
 ```
@@ -40,12 +40,14 @@ The following options are available on the `AuthorCollection` component.
 
 - retries: Number of retry attempts to download the Google spreadsheet. *(default is 10)*
 
+- version: CDN version number of repository to load data files from. *(default is main branch)*
+
 #### Custom Example
 
 An example of using the options is shown below.
 
 ```js
-ReactDOM.render(<AuthorCollection 
+ReactDOM.render(<AuthorCollection
                 manager={adultAuthorManager}
                 isHideBook={False}
                 isHideBookText={False}

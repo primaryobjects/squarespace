@@ -363,7 +363,7 @@ const AuthorCollection = (props) => {
   useEffect(() => {
     // Load data-source and process rows.
     const getData = async () =>
-      updateData(await load(props.manager.name, props.id || props.manager.id, props.retries || 10));
+      updateData(await load(props.manager.name, props.id || props.manager.id, props.version, props.retries || 10));
     getData();
   }, []);
 
@@ -371,9 +371,9 @@ const AuthorCollection = (props) => {
     return new Promise(resolve => setTimeout(resolve, ms));
   };
 
-  const load = async (name, spreadsheetId, retries) => {
+  const load = async (name, spreadsheetId, version, retries) => {
     const rows = [];
-    const defaultCdn = `https://cdn.jsdelivr.net/gh/primaryobjects/squarespace/data/${name}.csv`;
+    const defaultCdn = `https://cdn.jsdelivr.net/gh/primaryobjects/squarespace${version ? `@${version}` : ''}/data/${name}.csv`;
     const defaultUrl =
       props.url ||
       defaultCdn ||
