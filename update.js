@@ -12,67 +12,120 @@ const Progress = (props) => {
 };
 
 const SpreadsheetUpdate = (props) => {
-  const { useState, useEffect } = React;
+  const { useState } = React;
   const [loading, setLoading] = useState();
-  const [apiKey, setApiKey] = useState("");
-  const [spreadsheetId, setSpreadsheetId] = useState("");
-  const [status, setStatus] = useState("");
+  const [apiKey, setApiKey] = useState();
+  const [status, setStatus] = useState();
+  const [selections, setSelections] = useState({});
+
+  const config = {
+    user: 'primaryobjects',
+    repository: 'squarespace',
+    branch: 'test'
+  };
+
+  const collections = [
+    adultAuthorManager,
+    youngAdultAuthorManager,
+    poetAuthorManager,
+    childAuthorManager,
+  ];
 
   const sleep = (ms) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   };
 
+  const commit = async (path, content, apiKey, message) => {
+    const github = new GitHub({
+      token: apiKey, // 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
+    });
+
+    const repo = github.getRepo(config.user, config.repository);
+
+    const branches = await repo.listBranches();
+    const branch = branches.data.find(branch => branch.name === config.branch)
+    !branch && await repo.createBranch('main', config.branch);
+
+    return await repo.writeFile(
+      config.branch, // e.g. 'master'
+      path, // e.g. 'blog/index.md'
+      content, // e.g. 'Hello world, this is my new content'
+      message, // e.g. 'Created new index'
+    );
+  };
+
+  const download = async (url) => {
+    // Download the file from the url.
+    let res = await fetch(url);
+
+    // If the response was redirected, get the redirected URL.
+    if (res.redirected) {
+      res = await fetch(res.url);
+    }
+
+    // Decode the response body to a string.
+    const decoder = new TextDecoder('utf-8');
+    const content = await res.body.getReader().read();
+
+    // Return the decoded content.
+    return decoder.decode(content.value);
+  };
+
   const onUpdate = async (e) => {
-    const retries = 10;
+    const retries = 1;
     const defaultUrl =
       props.url ||
       "https://docs.google.com/spreadsheets/d/e/[ID]/pub?output=csv";
-    const url = spreadsheetId.startsWith("http")
-      ? spreadsheetId
-      : defaultUrl.replace("[ID]", spreadsheetId);
 
     e.preventDefault();
 
     try {
       setLoading(true);
 
-      if (spreadsheetId) {
-        let count = 0;
-        while (count++ < retries) {
-          try {
-            // Download the data-source.
-            let res = await fetch(url);
-            if (res.redirected) {
-              res = await fetch(res.url);
+      // Find selected collections from the checkboxes.
+      const keys = Object.keys(selections);
+      for (let i=0; i<keys.length; i++) {
+        const key = keys[i];
+        const selection = selections[key];
+        if (selection.checked) {
+          const url = defaultUrl.replace("[ID]", selection.collection.id);
+
+          let count = 0;
+          while (count++ < retries) {
+            try {
+              // Download the data-source.
+              const content = await download(url);
+
+              // Copy data to GitHub.
+              const path = `data/${selection.collection.name}.csv`;
+              const result = await commit(path, content, apiKey, `Updated ${selection.collection.name} csv.`);
+              setStatus(`Updated ${path} - ${result.status}`);
+
+              break;
+            } catch (ex1) {
+              await setStatus(`Unable to fetch ${selection.collection.name} using ${url}, attempt ${count}/${retries}.\n${ex1}`);
+              console.warn(status);
+              await sleep(1000);
             }
-
-            const reader = res.body.getReader();
-            const decoder = new TextDecoder('utf-8');
-
-            const content = await reader.read();
-            const csv = decoder.decode(content.value);
-
-            //
-            // Copy data to GitHub.
-            //
-            console.log(csv);
-
-            break;
-          } catch (ex1) {
-            setStatus(`Unable to fetch ${url}, attempt ${count}/${retries}.`);
-            console.warn(status);
-            await sleep(1000);
           }
         }
       }
     } catch (ex2) {
-      setStatus(`Error downloading and parsing url ${url}\n${ex2}`);
+      await setStatus(`Error in onUpdate: ${ex2}`);
       console.error(status);
     } finally {
       setLoading(false);
     }
 
     return false;
+  };
+
+  const onUpdateSelection = (e, collection) => {
+    const { name, checked } = e.target;
+
+    // Update selections from checkboxes.
+    selections[name] = { checked, collection };
+    setSelections(selections);
   };
 
   return (
@@ -87,7 +140,7 @@ const SpreadsheetUpdate = (props) => {
               GitHub API Key
             </label>
             <input
-              type="text"
+              type="password"
               class="form-control"
               id="githubApiKey"
               value={apiKey}
@@ -95,16 +148,22 @@ const SpreadsheetUpdate = (props) => {
             />
           </div>
           <div class="mb-3">
-            <label for="spreadSheetId" class="form-label">
-              Spreadsheet ID
-            </label>
-            <input
-              type="text"
-              class="form-control"
-              id="spreadsheetId"
-              value={spreadsheetId}
-              onChange={(e) => setSpreadsheetId(e.target.value)}
-            />
+            <div><b>Spreadsheets</b></div>
+              {collections.map((collection) => (
+                <div>
+                  <input
+                    type="checkbox"
+                    class="form-control"
+                    name={collection.name}
+                    id={collection.name}
+                    defaultChecked={selections[collection.name] && selections[collection.name].checked}
+                    onChange={(e) => { onUpdateSelection(e, collection)}}
+                  />
+                  <label for={collection.name} class="form-label">
+                    {collection.name[0].toUpperCase() + collection.name.slice(1)} Authors
+                  </label>
+                </div>
+            ))}
           </div>
           <button type="submit" class="btn btn-primary" onClick={onUpdate}>
             Update

@@ -7,12 +7,13 @@
         <script src='https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser-polyfill.min.js'></script>
         <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
         <script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
+        <script src="https://unpkg.com/github-api/dist/GitHub.bundle.min.js"></script>
         <script src="collections.js" type="text/jsx"></script>
         <script src="update.js" type="text/jsx"></script>
     </head>
     <body>
-        <div id='root'></div>
         <div id='update-root'></div>
+        <div id='root'></div>
         <script type='text/jsx'>
         $(function() {
           // Render a collection of authors using a specific spreadsheet parser and inner renderer.
