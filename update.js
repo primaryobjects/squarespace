@@ -21,7 +21,7 @@ const SpreadsheetUpdate = (props) => {
   const config = {
     user: 'primaryobjects',
     repository: 'squarespace',
-    branch: 'test'
+    branch: 'update'
   };
 
   const collections = [
