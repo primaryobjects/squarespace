@@ -37,7 +37,7 @@ const SpreadsheetUpdate = (props) => {
 
   const commit = async (path, content, apiKey, message) => {
     const github = new GitHub({
-      token: apiKey, // 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
+      token: apiKey,
     });
 
     const repo = github.getRepo(config.user, config.repository);
