@@ -104,6 +104,7 @@ const SpreadsheetUpdate = (props) => {
 
     try {
       setLoading(true);
+      await setStatus("");
 
       // Find selected collections from the checkboxes.
       const keys = Object.keys(selections);
@@ -114,43 +115,46 @@ const SpreadsheetUpdate = (props) => {
       for (let i = 0; i < keys.length; i++) {
         const key = keys[i];
         const selection = selections[key];
-        if (selection.checked) {
-          const url = defaultUrl.replace("[ID]", selection.collection.id);
+        const url = defaultUrl.replace("[ID]", selection.collection.id);
 
-          let count = 0;
-          while (count++ < retries) {
-            try {
-              await updateStatus(key, 100, true);
+        let count = 0;
+        while (count++ < retries) {
+          try {
+            await updateStatus(key, 100, true);
 
-              // Download the data-source.
-              const content = await download(url);
+            // Download the data-source.
+            const content = await download(url);
 
-              // Copy data to GitHub.
-              const path = `data/${selection.collection.name}.csv`;
-              const result = await commit(
-                path,
-                content,
-                apiKey,
-                `Updated ${selection.collection.name} csv.`
-              );
-              setStatus(`Updated ${path} - ${result.status}`);
+            // Copy data to GitHub.
+            const path = `data/${selection.collection.name}.csv`;
+            const result = await commit(
+              path,
+              content,
+              apiKey,
+              `Updated ${selection.collection.name} csv.`
+            );
+            setStatus(`Updated ${path} - ${result.status}`);
 
-              await updateStatus(key, result.status);
+            await updateStatus(key, result.status);
 
-              break;
-            } catch (ex1) {
-              await setStatus(
-                `Unable to fetch ${selection.collection.name} using ${url}, attempt ${count}/${retries}.\n${ex1}`
-              );
-              console.warn(status);
-              await updateStatus(key, ex1.response ? ex1.response.status : "");
-              await sleep(1000);
-            }
+            break;
+          } catch (ex1) {
+            await setStatus(
+              `Unable to fetch ${selection.collection.name} using ${url}, attempt ${count}/${retries}.\n${ex1}`
+            );
+            console.warn(status);
+            await updateStatus(key, ex1.response ? ex1.response.status : "");
+            await sleep(1000);
           }
         }
       }
+
+      if (!keys.length) {
+        await setStatus("No collections selected.");
+      }
     } catch (ex2) {
-      await setStatus(`Error in onUpdate: ${ex2}`);
+      const status = `Error in onUpdate: ${ex2}`;
+      await setStatus(status);
       console.error(status);
     } finally {
       setLoading(false);
@@ -161,7 +165,12 @@ const SpreadsheetUpdate = (props) => {
     const { name, checked } = e.target;
 
     // Update selections from checkboxes.
-    selections[name] = { checked, collection };
+    if (checked) {
+      selections[name] = { collection };
+    } else {
+      delete selections[name];
+    }
+
     setSelections(selections);
   };
 
@@ -172,30 +181,34 @@ const SpreadsheetUpdate = (props) => {
         style={{ float: "left", margin: "0 10px 0 0" }}
       >
         <form onSubmit={onUpdate}>
-          <div class="mb-3">
-            <label for="githubApiKey" class="form-label">
-              GitHub API Key
-            </label>
+          <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">
+              <i class="fab fa-github"></i>
+            </span>
             <input
               type="password"
               class="form-control"
               id="githubApiKey"
+              aria-describedby="basic-addon1"
+              placeholder="GitHub API key"
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
               required
             />
           </div>
           <div class="mb-3">
-            <div>
-              <b>Spreadsheets</b>
+            <div class="form-text">
+              <h5>Spreadsheets</h5>
             </div>
+          </div>
+          <div class="mb-3">
             {collections.map((collection) => {
               const selection = selections[collection.name];
               return (
-                <div>
+                <div class="form-check">
                   <input
                     type="checkbox"
-                    class="form-control"
+                    class="form-check-input"
                     name={collection.name}
                     id={collection.name}
                     defaultChecked={selection && selection.checked}
@@ -203,7 +216,7 @@ const SpreadsheetUpdate = (props) => {
                       onUpdateSelection(e, collection);
                     }}
                   />
-                  <label for={collection.name} class="form-label">
+                  <label for={collection.name} class="form-check-label">
                     {collection.name[0].toUpperCase() +
                       collection.name.slice(1)}{" "}
                     Authors
@@ -221,15 +234,22 @@ const SpreadsheetUpdate = (props) => {
               );
             })}
           </div>
-          <button type="submit" class="btn btn-primary">
-            Update
-          </button>
+          <div>
+            <button type="submit" class="btn btn-primary float-start me-2">
+              Update
+            </button>
+            <div className="progress-panel pt-1">{loading && <Progress />}</div>
+          </div>
         </form>
-        <div id="status" style={{ fontSize: "12px", color: "#606060" }}>
+        <div style={{ clear: "both" }}></div>
+        <div
+          id="status"
+          class="pt-2"
+          style={{ fontSize: "12px", color: "#606060" }}
+        >
           {status}
         </div>
       </div>
-      <div className="progress">{loading && <Progress />}</div>
     </div>
   );
 };

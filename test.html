@@ -1,6 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
         <script crossorigin src="https://unpkg.com/react@17/umd/react.production.min.js"></script>
         <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"></script>
@@ -8,11 +9,20 @@
         <script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
         <script src="https://unpkg.com/papaparse@latest/papaparse.min.js"></script>
         <script src="https://unpkg.com/github-api/dist/GitHub.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
         <script src="collections.js" type="text/jsx"></script>
         <script src="update.js" type="text/jsx"></script>
     </head>
     <body>
-        <div id='update-root'></div>
+        <button class='btn' data-bs-toggle='collapse' data-bs-target='#updatePanel' aria-expanded='false' aria-controls='updatePanel' title='Open content update panel'>
+            <i class="fas fa-plus-circle"></i>
+        </button>
+        <div class='collapse' id='updatePanel'>
+            <div class='card card-body'>
+                <div id='update-root'></div>
+            </div>
+        </div>
+
         <div id='root'></div>
         <script type='text/jsx'>
         $(function() {
