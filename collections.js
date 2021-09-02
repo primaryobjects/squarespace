@@ -556,6 +556,7 @@ const childAuthorManager = {
       instagram: parse(row, "Instagram"),
       twitter: parse(row, "Twitter"),
       profileImage: parse(row, "Profile Image"),
+      bookImage: parse(row, "Book Image"),
       bookInformation: [...Array(6)]
         .map((_, i) => `${parse(row, `Title - Book ${i + 1}`)}`)
         .join("\n")
