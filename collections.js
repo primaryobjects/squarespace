@@ -551,6 +551,7 @@ const childAuthorManager = {
   parse: (row) => {
     return {
       name: parse(row, "Author Name"),
+      biography: parse(row, "Biography"),
       website: parse(row, "Author Website"),
       facebook: parse(row, "Facebook"),
       instagram: parse(row, "Instagram"),
