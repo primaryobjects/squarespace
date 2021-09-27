@@ -15,9 +15,9 @@
     </head>
     <body>
         <button class='btn' data-bs-toggle='collapse' data-bs-target='#updatePanel' aria-expanded='false' aria-controls='updatePanel' title='Open content update panel'>
-            <i class="fas fa-plus-circle"></i>
+            <i class="fa"></i>
         </button>
-        <div class='collapse' id='updatePanel'>
+        <div class='collapse show' id='updatePanel'>
             <div class='card card-body'>
                 <div id='update-root'></div>
             </div>
@@ -30,8 +30,17 @@
           ReactDOM.render(<AuthorCollection
                             manager={poetAuthorManager}
                           />, document.getElementById('root'));
-          ReactDOM.render(<SpreadsheetUpdate />, document.getElementById('update-root'));
+          ReactDOM.render(<SpreadsheetUpdate apiKey="lala" />, document.getElementById('update-root'));
       });
         </script>
+        <style type="text/css">
+          [data-bs-toggle="collapse"] .fa:before {
+            content: "\f107";
+          }
+
+          [data-bs-toggle="collapse"].collapsed .fa:before {
+            content: "\f105";
+          }
+        </style>
     </body>
 </html>

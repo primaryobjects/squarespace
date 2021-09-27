@@ -14,7 +14,7 @@ const Progress = (props) => {
 const SpreadsheetUpdate = (props) => {
   const { useState } = React;
   const [loading, setLoading] = useState();
-  const [apiKey, setApiKey] = useState();
+  const [apiKey, setApiKey] = useState(props.apiKey);
   const [status, setStatus] = useState();
   const [selections, setSelections] = useState({});
 
