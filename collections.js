@@ -192,7 +192,7 @@ const Author = (props) => {
             id="block-1e88d17bec83c8e26856"
           >
             <div className="sqs-block-content">
-              <h4 style={{ whiteSpace: "pre-wrap" }}>{author.name}</h4>
+              <h4 id={author.name} style={{ whiteSpace: "pre-wrap" }}>{author.name}</h4>
               <p className style={{ whiteSpace: "pre-wrap" }}>
                 {author.biography}
               </p>
@@ -248,7 +248,7 @@ const Poet = (props) => {
             id="block-1e88d17bec83c8e26856"
           >
             <div className="sqs-block-content">
-              <h4 style={{ whiteSpace: "pre-wrap" }}>{author.name}</h4>
+              <h4 id={author.name} style={{ whiteSpace: "pre-wrap" }}>{author.name}</h4>
               <p className style={{ whiteSpace: "pre-wrap" }}>
                 {author.biography}
               </p>
@@ -297,7 +297,7 @@ const YoungAdult = (props) => {
             id="block-1e88d17bec83c8e26856"
           >
             <div className="sqs-block-content">
-              <h4 style={{ whiteSpace: "pre-wrap" }}>{author.name}</h4>
+              <h4 id={author.name} style={{ whiteSpace: "pre-wrap" }}>{author.name}</h4>
               <p className style={{ whiteSpace: "pre-wrap" }}>
                 {author.biography}
               </p>
