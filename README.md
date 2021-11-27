@@ -30,7 +30,7 @@ ReactDOM.render(<AuthorCollection
 
 The following options are available on the `AuthorCollection` component.
 
-- manager: Google spreadsheet data manager object and field parser. See examples for [adultAuthorManager](https://github.com/primaryobjects/squarespace/blob/main/collections.js#L453) and [childAuthorManager](https://github.com/primaryobjects/squarespace/blob/main/collections.js#L524).
+- manager: Google spreadsheet data manager object and field parser. See examples for [adultAuthorManager](https://github.com/primaryobjects/squarespace/blob/main/collections.js#L473) and [childAuthorManager](https://github.com/primaryobjects/squarespace/blob/main/collections.js#L547).
 
 - isHideBook: True if book details should not be displayed for the author. *(default is False)*
 
