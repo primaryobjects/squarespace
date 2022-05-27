@@ -43,8 +43,8 @@ const ProfileImage = (props) => {
 };
 
 const Links = (props) => {
-  const { website, facebook, instagram, twitter } = props.data;
-  const isLinks = website || facebook || instagram || twitter;
+  const { website, facebook, instagram, twitter, tiktok } = props.data;
+  const isLinks = website || facebook || instagram || twitter || tiktok;
 
   const formatTwitter = (url) => {
     // Extract Twitter username
@@ -113,6 +113,17 @@ const Links = (props) => {
                 target="_blank"
               >
                 {formatTwitter(twitter)}
+              </a>
+            </p>
+          )}
+          {tiktok && (
+            <p className style={{ whiteSpace: "pre-wrap" }}>
+              <i
+                className="fab fa-tiktok"
+                style={{ marginRight: "5px" }}
+              ></i>
+              <a href={formatUrl(tiktok)} target="_blank">
+                {formatUrl(tiktok)}
               </a>
             </p>
           )}
@@ -472,7 +483,7 @@ const authorManager = {
 
 const adultAuthorManager = {
   name: 'adult',
-  id: "2PACX-1vSy8LiifhZPF8eJjTB7Pk0Jfvpxew3tfQ6pjlMiMF17Sbfw85dpaSq0TK-aKTNe7eQkiXNFdA7bghp5",
+  id: "2PACX-1vRmMLf1FGrf6H9eD-ndxRajhTpoZ4qwk5Mjmdr8u2lXuTX1oiv25_Ktsmv-iyygaA4ELaTT0cD02I3s",
   control: Author,
   parse: (row) => {
     return {
@@ -483,6 +494,7 @@ const adultAuthorManager = {
       facebook: parse(row, "Facebook"),
       instagram: parse(row, "Instagram"),
       twitter: parse(row, "Twitter"),
+      tiktok: parse(row, "Tik Tok"),
       profileImage: parse(row, "Profile Image"),
       bookImage: parse(row, "Book Image"),
     };
@@ -501,6 +513,7 @@ const poetAuthorManager = {
       facebook: parse(row, "Facebook"),
       instagram: parse(row, "Instagram"),
       twitter: parse(row, "Twitter"),
+      tiktok: parse(row, "Tik Tok"),
       profileImage: parse(row, "ProfileImage"),
     };
   },
@@ -508,7 +521,7 @@ const poetAuthorManager = {
 
 const youngAdultAuthorManager = {
   name: 'youngAdult',
-  id: "2PACX-1vStJm3bQ8MQ3VrLxg40BpUnUKltukDsih0gWPStoZAcXc82utOpkB1125mrqx_qPrDBTFj129EFaFv2",
+  id: "2PACX-1vRvnpWTxMV2ey4gbHfu4mBiIYUOEzXbvLS_-366vZzgAQdIBBld6NRqmBxbWT16ReK8fkStg9OBk7r2",
   control: YoungAdult,
   parse: (row) => {
     return {
@@ -519,6 +532,7 @@ const youngAdultAuthorManager = {
       facebook: parse(row, "Facebook"),
       instagram: parse(row, "Instagram"),
       twitter: parse(row, "Twitter"),
+      tiktok: parse(row, "Tik Tok"),
       profileImage: parse(row, "ProfileImage"),
       questions: [
         {
@@ -546,7 +560,7 @@ const youngAdultAuthorManager = {
 
 const childAuthorManager = {
   name: 'child',
-  id: "2PACX-1vR8L4a2asSglWwhj8iZXyaFt_pGavdgZRMx6C5rN8HDw8AnrKWCQUR6vrNIIdOhboaIjn3OeFwBlJ3I",
+  id: "2PACX-1vT0gu0lNLT4Uoc5JCAbivxmQ4Zx6ejxVtB2bTzJUiDOUuzUrmqoLw32G3iY_CqrQyzU27u3K5fnl5S9",
   control: Author,
   parse: (row) => {
     return {
@@ -556,6 +570,7 @@ const childAuthorManager = {
       facebook: parse(row, "Facebook"),
       instagram: parse(row, "Instagram"),
       twitter: parse(row, "Twitter"),
+      tiktok: parse(row, "Tik Tok"),
       profileImage: parse(row, "Profile Image"),
       bookImage: parse(row, "Book Image"),
       bookInformation: [...Array(6)]
