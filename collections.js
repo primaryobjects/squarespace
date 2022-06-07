@@ -569,7 +569,7 @@ const childAuthorManager = {
   control: Author,
   parse: (row) => {
     return {
-      name: parse(row, "Author Name"),
+      name: parse(row, "Author"),
       biography: parse(row, "Biography"),
       website: parse(row, "Author Website"),
       facebook: parse(row, "Facebook"),
