@@ -28,7 +28,7 @@
         $(function() {
           // Render a collection of authors using a specific spreadsheet parser and inner renderer.
           ReactDOM.render(<AuthorCollection
-                            manager={poetAuthorManager}
+                            manager={youngAdultAuthorManager} image="book" isHideBookImage="true"
                           />, document.getElementById('root'));
           ReactDOM.render(<SpreadsheetUpdate />, document.getElementById('update-root'));
       });

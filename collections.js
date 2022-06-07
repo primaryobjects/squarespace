@@ -167,7 +167,7 @@ const Book = (props) => {
           </p>
         </div>
       )}
-      {bookImage && (
+      {!props.isHideImage && bookImage && (
         <div className="sqs-block-content" id="yui_3_17_2_1_1624821117171_518">
           <img src={bookImage} style={{ maxWidth: "200px" }} />
         </div>
@@ -194,7 +194,7 @@ const Author = (props) => {
               className="sqs-block-content"
               id="yui_3_17_2_1_1624821117171_518"
             >
-              <ProfileImage url={author.profileImage} />
+              <ProfileImage url={props.image === 'book' ? author.bookImage : author.profileImage} />
             </div>
           </div>
           <div
@@ -213,6 +213,7 @@ const Author = (props) => {
                   data={author}
                   title={props.booksHeading}
                   isHideText={props.isHideBookText}
+                  isHideImage={props.isHideBookImage}
                 />
               )}
             </div>
@@ -250,7 +251,7 @@ const Poet = (props) => {
               className="sqs-block-content"
               id="yui_3_17_2_1_1624821117171_518"
             >
-              <ProfileImage url={author.profileImage} />
+              <ProfileImage url={author.image === 'book' ? author.bookImage : author.profileImage} />
             </div>
           </div>
           <div
@@ -299,7 +300,7 @@ const YoungAdult = (props) => {
               className="sqs-block-content"
               id="yui_3_17_2_1_1624821117171_518"
             >
-              <ProfileImage url={author.profileImage} />
+              <ProfileImage url={author.image === 'book' ? author.bookImage : author.profileImage} />
             </div>
           </div>
           <div
@@ -452,7 +453,9 @@ const AuthorCollection = (props) => {
                     data={item}
                     isHideBook={props.isHideBook}
                     isHideBookText={props.isHideBookText}
+                    isHideBookImage={props.isHideBookImage}
                     booksHeading={props.booksHeading}
+                    image={props.image}
                   />
                 ))}
               </div>
