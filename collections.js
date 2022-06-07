@@ -514,7 +514,8 @@ const poetAuthorManager = {
       instagram: parse(row, "Instagram"),
       twitter: parse(row, "Twitter"),
       tiktok: parse(row, "Tik Tok"),
-      profileImage: parse(row, "ProfileImage"),
+      profileImage: parse(row, "Profile Image"),
+      bookImage: parse(row, "Book Image"),
     };
   },
 };
@@ -522,7 +523,7 @@ const poetAuthorManager = {
 const youngAdultAuthorManager = {
   name: 'youngAdult',
   id: "2PACX-1vRvnpWTxMV2ey4gbHfu4mBiIYUOEzXbvLS_-366vZzgAQdIBBld6NRqmBxbWT16ReK8fkStg9OBk7r2",
-  control: YoungAdult,
+  control: Author,
   parse: (row) => {
     return {
       name: parse(row, "Author"),
@@ -533,7 +534,8 @@ const youngAdultAuthorManager = {
       instagram: parse(row, "Instagram"),
       twitter: parse(row, "Twitter"),
       tiktok: parse(row, "Tik Tok"),
-      profileImage: parse(row, "ProfileImage"),
+      profileImage: parse(row, "Profile Image"),
+      bookImage: parse(row, "Book Image"),
       questions: [
         {
           name: "What's your favorite thing about meeting with readers?",
