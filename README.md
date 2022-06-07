@@ -32,9 +32,13 @@ The following options are available on the `AuthorCollection` component.
 
 - manager: Google spreadsheet data manager object and field parser. See examples for [adultAuthorManager](https://github.com/primaryobjects/squarespace/blob/main/collections.js#L473) and [childAuthorManager](https://github.com/primaryobjects/squarespace/blob/main/collections.js#L547).
 
+- image: Determines which image to display int he primary slot. Values: `profile`, `book`. *(default is profile)*
+
 - isHideBook: True if book details should not be displayed for the author. *(default is False)*
 
 - isHideBookText: True if only the book image should be displayed, not the book text information including "Buy the Book". *(default is False)*
+
+- isHideBookImage: True to hide the book image from displaying in the book details section. *(default is False)*
 
 - booksHeading: Heading text for book information section. *(default is "Buy the Book")*
 
