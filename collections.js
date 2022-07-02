@@ -204,8 +204,7 @@ const Author = (props) => {
           >
             <div className="sqs-block-content">
               <h4 id={author.name} style={{ whiteSpace: "pre-wrap" }}>{author.name}</h4>
-              <p className style={{ whiteSpace: "pre-wrap" }}>
-                {author.biography}
+              <p className style={{ whiteSpace: "pre-wrap" }} dangerouslySetInnerHTML={{ __html: author.biography }}>
               </p>
               <Links data={author} />
               {!props.isHideBook && (
