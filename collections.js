@@ -566,7 +566,7 @@ const childAuthorManager = {
     return {
       name: parse(row, "Author"),
       biography: parse(row, "Biography"),
-      website: parse(row, "Author Website"),
+      website: parse(row, "Website"),
       facebook: parse(row, "Facebook"),
       instagram: parse(row, "Instagram"),
       twitter: parse(row, "Twitter"),
